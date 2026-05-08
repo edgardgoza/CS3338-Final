@@ -14,15 +14,15 @@
 \newpage
 
 \section{Overview}
-This document provides a breakdown of every page, part, and tool of the PD-Intranet project, including all packages, dependencies, and libraries required to run the project in a Docker container.
+This document goes over every page and feature of the PD-Intranet project. It also lists all the packages and libraries needed to get it running in Docker.
 
 \section{Pages and Components}
 
 \subsection{Login / Authentication}
-Users authenticate through Azure Active Directory (Azure AD). Upon login, their role is resolved and they are redirected to their personalized dashboard.
+Users log in through Azure Active Directory. Once they are in, the system figures out their role and sends them to the right dashboard.
 
 \subsection{Role-Based Dashboard}
-The main landing page for each user. Content, navigation links, and widgets are displayed based on the user's assigned role. Supports 9 roles: Attorney, Paralegal, Investigator, Social Worker, Admin Staff, IT, Management, Public Defender, and Intern.
+This is the home page every user sees when they log in. What shows up depends on their role. We have 9 roles total: Attorney, Paralegal, Investigator, Social Worker, Admin Staff, IT, Management, Public Defender, and Intern.
 
 \subsection{Office Hoteling System}
 Allows staff to reserve desks in advance. Displays real-time desk availability per office location.
