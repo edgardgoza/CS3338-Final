@@ -1,0 +1,46 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+\title{PD-Intranet: Role-Based SharePoint Resource Center \\ \large User Manual}
+\author{Group 10}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Introduction}
+PD-Intranet is a role-based internal platform designed to centralize and personalize resources for the Santa Barbara County Public Defender's Office. It replaces fragmented information systems with a unified hub that delivers content based on user roles.
+
+\section{Goals}
+\begin{itemize}
+    \item Reduce manual permission management
+    \item Improve resource accessibility for all staff
+    \item Enhance productivity with personalized dashboards
+    \item Ensure secure, role-based access to sensitive information
+\end{itemize}
+
+\section{Objectives}
+\begin{itemize}
+    \item Implement role-based access control for 9 user roles
+    \item Automate permission sync using Azure Active Directory
+    \item Build modular SharePoint web parts for each department
+    \item Deploy an office hoteling and attorney workload dashboard
+\end{itemize}
+
+\section{Jira}
+\href{https://cs3338-group--10.atlassian.net/jira/software/projects/CSLDGS/boards/2}{https://cs3338-group--10.atlassian.net/jira/software/projects/CSLDGS/boards/2}
+
+\section{How to Access}
+\begin{enumerate}
+    \item Clone the repository from GitHub
+    \item Install dependencies: \texttt{npm install}
+    \item Build the SPFx solution: \texttt{gulp bundle --ship \&\& gulp package-solution --ship}
+    \item Deploy the \texttt{.sppkg} file to the SharePoint App Catalog
+    \item Access the platform via your SharePoint site
+\end{enumerate}
+
+\end{document}

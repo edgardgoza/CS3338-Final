@@ -1,1 +1,90 @@
-% Placeholder Design Spec file
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{longtable}
+
+\title{PD-Intranet: Role-Based SharePoint Resource Center \\ \large Design Specification}
+\author{Group 10}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Overview}
+This document provides a breakdown of every page, part, and tool of the PD-Intranet project, including all packages, dependencies, and libraries required to run the project in a Docker container.
+
+\section{Pages and Components}
+
+\subsection{Login / Authentication}
+Users authenticate through Azure Active Directory (Azure AD). Upon login, their role is resolved and they are redirected to their personalized dashboard.
+
+\subsection{Role-Based Dashboard}
+The main landing page for each user. Content, navigation links, and widgets are displayed based on the user's assigned role. Supports 9 roles: Attorney, Paralegal, Investigator, Social Worker, Admin Staff, IT, Management, Public Defender, and Intern.
+
+\subsection{Office Hoteling System}
+Allows staff to reserve desks in advance. Displays real-time desk availability per office location.
+
+\subsection{Attorney Workload Dashboard}
+Displays active case counts, upcoming deadlines, and workload summaries for attorneys and supervisors.
+
+\subsection{Urgency Portal}
+Powered by PowerBI. Displays analytics on high-priority cases and flagged items for management review.
+
+\subsection{Expert Witness Directory}
+A searchable directory of expert witnesses, filterable by specialty and availability.
+
+\subsection{Resource Libraries}
+Role-scoped document libraries. Staff only see folders and files relevant to their department.
+
+\subsection{Announcements}
+Office-wide and role-targeted announcements managed by admins.
+
+\section{Dependencies and Libraries}
+
+\subsection{Frontend}
+\begin{longtable}{|p{2.5in}|p{3.5in}|}
+\hline
+\textbf{Package} & \textbf{Purpose} \\ \hline
+SPFx (SharePoint Framework) & Web part framework for SharePoint \\ \hline
+React & UI component library \\ \hline
+TypeScript & Typed JavaScript for SPFx development \\ \hline
+PnP.js & SharePoint REST API abstraction \\ \hline
+Microsoft Graph API Client & Access Microsoft 365 data (users, groups) \\ \hline
+SCSS / CSS & Styling for web parts \\ \hline
+\end{longtable}
+
+\subsection{Backend / Data}
+\begin{longtable}{|p{2.5in}|p{3.5in}|}
+\hline
+\textbf{Package} & \textbf{Purpose} \\ \hline
+Microsoft Graph API & Role and group resolution from Azure AD \\ \hline
+Azure Active Directory & User authentication and permission sync \\ \hline
+SharePoint REST API & Document library and list management \\ \hline
+PowerBI Embedded & Analytics and urgency dashboards \\ \hline
+\end{longtable}
+
+\subsection{DevOps / Deployment}
+\begin{longtable}{|p{2.5in}|p{3.5in}|}
+\hline
+\textbf{Package} & \textbf{Purpose} \\ \hline
+Node.js & Runtime for SPFx build tools \\ \hline
+Gulp & Build task runner for SPFx \\ \hline
+npm & Package manager \\ \hline
+Docker & Containerized deployment environment \\ \hline
+SharePoint App Catalog & Deployment target for SPFx solution \\ \hline
+\end{longtable}
+
+\section{Docker Container Setup}
+To run the development environment in Docker, the container requires:
+\begin{itemize}
+    \item Base image: \texttt{node:18}
+    \item Install global tools: \texttt{npm install -g gulp-cli @microsoft/generator-sharepoint yo}
+    \item Copy project files and run \texttt{npm install}
+    \item Expose port \texttt{4321} for the local SharePoint workbench
+    \item Build with \texttt{gulp bundle} and package with \texttt{gulp package-solution}
+\end{itemize}
+
+\end{document}
