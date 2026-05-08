@@ -42,7 +42,7 @@ PD-Intranet introduces:
 - Ensure secure role-based access
 
 ## Jira
-[INSERT YOUR JIRA LINK HERE]
+https://cs3338-group--10.atlassian.net/jira/software/projects/CSLDGS/boards/2
 
 ## How to Run
 1. Clone the repository
