@@ -1,3 +1,138 @@
-\section{Software Design Document}
-\subsection{Architecture}
-Frontend -> Backend -> Database
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, shapes.geometric}
+
+\title{PD-Intranet: Role-Based SharePoint Resource Center \\ \large Software Design Document}
+\author{Group 10}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Version History}
+\begin{longtable}{|p{1in}|p{1.3in}|p{1.4in}|p{2.6in}|}
+\hline
+\textbf{Version} & \textbf{Snapshot} & \textbf{Date} & \textbf{Revision Notes} \\ \hline
+1.0 & Snapshot 1 & TBD & Initial architecture and document structure. \\ \hline
+1.1 & Snapshot 2 & TBD & Added role filtering and authentication design. \\ \hline
+1.2 & Snapshot 3 & TBD & Added hoteling, workload, directory, and analytics module designs. \\ \hline
+1.3 & Snapshot 4 & TBD & Finalized deployment, testing, and future work notes. \\ \hline
+\end{longtable}
+
+\section{Introduction}
+
+\subsection{Purpose}
+This Software Design Document describes the design of PD-Intranet, a role-based internal SharePoint resource center for the Santa Barbara County Public Defender's Office. It explains how the system is structured, how components interact, and how the user interface is organized.
+
+\subsection{Intended Audience}
+This document is intended for developers, QA testers, project managers, instructors, and future maintainers who need to understand the technical design of the system.
+
+\subsection{Overview}
+PD-Intranet is built on SharePoint Framework (SPFx) using React and TypeScript. It uses Microsoft identity services to authenticate users and assign roles, then shows each user only the content and tools relevant to their role. The system replaces manual permission management with an automated, role-driven approach.
+
+\section{System Architecture}
+
+\subsection{Workflow}
+\begin{center}
+\begin{tikzpicture}[node distance=1.2cm,
+  box/.style={rectangle, draw, rounded corners, align=center, minimum width=3.2cm, minimum height=.8cm},
+  arrow/.style={-Latex}]
+\node[box] (user) {User Browser};
+\node[box, below=of user] (sharepoint) {SharePoint Site / UI};
+\node[box, below=of sharepoint] (spfx) {SPFx React Web Parts};
+\node[box, below left=of spfx] (identity) {Azure Entra ID / AD};
+\node[box, below=of spfx] (data) {SharePoint Lists / Libraries};
+\node[box, below right=of spfx] (powerbi) {Power BI Dashboards};
+\node[box, below=of data] (admin) {Admin / IT Maintenance};
+\draw[arrow] (user) -- (sharepoint);
+\draw[arrow] (sharepoint) -- (spfx);
+\draw[arrow] (spfx) -- (identity);
+\draw[arrow] (spfx) -- (data);
+\draw[arrow] (spfx) -- (powerbi);
+\draw[arrow] (data) -- (admin);
+\end{tikzpicture}
+\end{center}
+
+\subsection{Site Breakdown}
+\begin{itemize}
+  \item \textbf{Authentication Layer:} Users sign in with Microsoft credentials. Azure Entra ID or Active Directory groups determine each user's role.
+  \item \textbf{SPFx Frontend:} Reusable React web parts handle each feature (announcements, directories, workload views, procedure checklists). Navigation and content are filtered by role.
+  \item \textbf{Data Layer:} Data is stored in SharePoint lists and document libraries. PnP.js and Microsoft Graph API retrieve and filter data.
+  \item \textbf{Analytics Layer:} Power BI dashboards are embedded or linked for approved roles.
+  \item \textbf{Admin Layer:} IT and admin users manage SharePoint lists, role assignments, and content libraries.
+\end{itemize}
+
+\section{User Interface}
+
+\subsection{How to Use}
+Users access PD-Intranet through a SharePoint URL provided by their office. After signing in with their Microsoft account, they are taken to their role-specific home dashboard. Navigation links only show pages the user has permission to view. No manual setup is required from the user.
+
+\subsection{Pages and Tools}
+\begin{itemize}
+  \item \textbf{Home Dashboard:} Landing page showing role-specific announcements and quick links.
+  \item \textbf{Role-Based Resource Page:} Manuals, forms, and office documents filtered by role.
+  \item \textbf{Office Hoteling Page:} Allows staff to reserve desks or shared workspaces.
+  \item \textbf{Attorney Workload Page:} Displays and allows searching of case distribution data.
+  \item \textbf{Expert Witness Directory:} Searchable list of expert contacts with availability.
+  \item \textbf{CDD Resource Guide:} Resources specific to Capital Defense Division staff.
+  \item \textbf{Urgency Portal:} Analytics dashboard for supervisors and IT roles.
+  \item \textbf{Staff Directory:} Office contact list.
+  \item \textbf{Admin / Maintenance Page:} Tools for IT staff to manage lists and permissions.
+\end{itemize}
+
+\subsection{Database Explanation}
+Data is stored in SharePoint Lists and Document Libraries. Each list corresponds to a feature (e.g., a hoteling reservation list, a staff directory list). PnP.js queries these lists and returns only records the user's role is permitted to see. No external database is used.
+
+\section{Security Design}
+\begin{itemize}
+  \item Authentication is handled through Microsoft identity services.
+  \item Authorization is role-based using Azure Entra ID or Active Directory groups.
+  \item Restricted pages require the correct role assignment.
+  \item Secrets and credentials must not be committed to GitHub.
+\end{itemize}
+
+\section{Deployment Design}
+The system is deployed through SharePoint App Catalog as an SPFx package. A Docker setup may be used locally for planning and placeholder services during development.
+
+\section{Future Work}
+\begin{itemize}
+  \item Mobile-friendly UI improvements
+  \item Expanded analytics dashboards
+  \item Automated onboarding and offboarding workflows
+  \item Audit logging for sensitive page access
+  \item Admin controls for role management
+\end{itemize}
+
+\section{Glossary}
+\begin{longtable}{|p{1.4in}|p{4.6in}|}
+\hline
+\textbf{Term} & \textbf{Definition} \\ \hline
+SPFx & SharePoint Framework, the development model used to build SharePoint customizations. \\ \hline
+Azure Entra ID & Microsoft's identity and access management service (formerly Azure AD). \\ \hline
+PnP.js & JavaScript library used to interact with SharePoint and Microsoft 365 services. \\ \hline
+Power BI & Microsoft analytics and dashboard platform. \\ \hline
+RBAC & Role-Based Access Control, the security model used to filter content by user role. \\ \hline
+AD & Active Directory, Microsoft's directory service for managing users and groups. \\ \hline
+SDD & Software Design Document. \\ \hline
+SRS & Software Requirements Specification. \\ \hline
+UI & User Interface. \\ \hline
+IT & Information Technology. \\ \hline
+\end{longtable}
+
+\section{References}
+\begin{itemize}
+  \item \url{https://ascent.cysun.org/project/project/view/252}
+  \item \url{https://github.com/steventhestudent/sbpubdef}
+  \item \url{https://github.com/kLo1215/CS3338-Final-Project}
+  \item \url{https://learn.microsoft.com/en-us/sharepoint/dev/spfx/sharepoint-framework-overview}
+  \item \url{https://pnp.github.io/pnpjs/}
+\end{itemize}
+
+\end{document}

@@ -1,1 +1,116 @@
-% Placeholder SRS file
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{array}
+
+\title{PD-Intranet: Role-Based SharePoint Resource Center \\ \large Software Requirements Specification}
+\author{Group 10}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Version History}
+\begin{longtable}{|p{1in}|p{1.3in}|p{1.4in}|p{2.6in}|}
+\hline
+\textbf{Version} & \textbf{Snapshot} & \textbf{Date} & \textbf{Revision Notes} \\ \hline
+1.0 & Snapshot 1 & TBD & Initial requirements, project scope, user roles, and objectives. \\ \hline
+1.1 & Snapshot 2 & TBD & Added role-based content filtering, authentication, and first testing requirements. \\ \hline
+1.2 & Snapshot 3 & TBD & Added office hoteling, attorney workload, expert directory, and analytics requirements. \\ \hline
+1.3 & Snapshot 4 & TBD & Finalized requirements, legal considerations, future work, and acceptance criteria. \\ \hline
+\end{longtable}
+
+\section{Introduction}
+
+\subsection{Purpose}
+This Software Requirements Specification describes the expected behavior of PD-Intranet, a role-based internal SharePoint resource center for the Santa Barbara County Public Defender's Office. The purpose is to organize office resources, reduce manual permission management, and provide employees with content based on their role.
+
+\subsection{Intended Audience}
+This document is intended for developers, QA testers, project managers, instructors, and future maintainers who need to understand what the system must do.
+
+\subsection{Overview}
+PD-Intranet is a modular SharePoint Framework application using React and TypeScript. It connects with Microsoft identity tools and SharePoint services to display role-filtered content. Users sign in through their Microsoft account and are shown only the pages, tools, and resources that match their assigned role. The system covers features such as office hoteling, attorney workload tracking, an expert witness directory, and role-based resource pages.
+
+\section{Overall Description}
+
+\subsection{User Classes}
+\begin{itemize}
+  \item General Staff
+  \item Attorneys
+  \item Supervisors
+  \item IT Staff
+  \item Capital Defense Division Staff
+  \item Administrative Staff
+  \item Managers
+  \item External or limited-access users
+  \item System Administrators
+\end{itemize}
+
+\section{Functional Requirements}
+\begin{enumerate}[label=FR-\arabic*]
+  \item The system shall authenticate users through Microsoft/Azure identity services.
+  \item The system shall determine each user's role from Azure Entra ID or Active Directory data.
+  \item The system shall display navigation links based on the user's assigned role.
+  \item The system shall display role-specific announcements, forms, manuals, and office resources.
+  \item The system shall provide an Office Hoteling module for reserving office desks or shared workspaces.
+  \item The system shall provide an Attorney Workload module for viewing and searching case distribution information.
+  \item The system shall provide an Expert Witness Directory with searchable contacts and availability information.
+  \item The system shall provide an Urgency Portal or analytics dashboard for approved supervisor and IT roles.
+  \item The system shall prevent unauthorized roles from accessing restricted content.
+\end{enumerate}
+
+\section{External Interface Requirements}
+
+\subsection{User Interface}
+The user interface is web-based and hosted through SharePoint. Users access the system through a SharePoint URL in a browser. After signing in, the interface shows only the pages and tools available for their role. No installation is required on the user's machine.
+
+\subsection{Software Interfaces}
+\begin{itemize}
+  \item SharePoint Framework (SPFx)
+  \item React
+  \item TypeScript
+  \item PnP.js
+  \item Microsoft Graph API
+  \item Azure Entra ID / Active Directory
+  \item Power BI Embedded
+  \item SharePoint App Catalog
+\end{itemize}
+
+\section{Non-Functional Requirements}
+\begin{enumerate}[label=NFR-\arabic*]
+  \item The system should load main pages within a reasonable time under normal office network conditions.
+  \item The system should support role updates without manual SharePoint permission changes.
+  \item The system should protect sensitive office information through role-based access control.
+  \item The system should be maintainable by future IT staff.
+  \item The system should use modular components so features can be updated separately.
+\end{enumerate}
+
+\section{Legal and Ethical Considerations}
+Because the system is intended for a Public Defender's Office, it may involve sensitive staff, office, and case-related information. The following must be considered:
+\begin{itemize}
+  \item \textbf{User Data:} The system must not store or expose personally identifiable information beyond what is required for role assignment and office directory purposes.
+  \item \textbf{Storing Things:} All data is stored within the organization's SharePoint environment. No data is sent to third-party services without authorization.
+  \item \textbf{Role-Based Access:} Confidential content (case details, personnel records) must be restricted to users with the appropriate role. Unauthorized access must be blocked at the application level.
+  \item \textbf{Moral Responsibility:} Since the office serves clients in the legal system, any breach of data confidentiality could impact active cases or client rights. The system must be designed with privacy and security as a priority.
+\end{itemize}
+
+\section{Glossary}
+\begin{longtable}{|p{1.4in}|p{4.6in}|}
+\hline
+\textbf{Term} & \textbf{Definition} \\ \hline
+SPFx & SharePoint Framework, a development model for SharePoint customizations. \\ \hline
+Azure Entra ID & Microsoft identity and access management service (formerly Azure AD). \\ \hline
+PnP.js & JavaScript library used to interact with SharePoint and Microsoft 365 services. \\ \hline
+Power BI & Microsoft analytics and dashboard platform. \\ \hline
+RBAC & Role-Based Access Control. \\ \hline
+AD & Active Directory, Microsoft's directory service for managing users and groups. \\ \hline
+SRS & Software Requirements Specification. \\ \hline
+UI & User Interface. \\ \hline
+IT & Information Technology. \\ \hline
+\end{longtable}
+
+\end{document}
