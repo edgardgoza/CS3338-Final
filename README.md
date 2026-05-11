@@ -1,4 +1,4 @@
-CS-3338 Final Project - Group 10 - Role-Based SharePoint Resource Center 
+CS-3338 Final Project - **Group 10** - Role-Based SharePoint Resource Center 
 
 # PD-Intranet: Role-Based SharePoint Resource Center
 
